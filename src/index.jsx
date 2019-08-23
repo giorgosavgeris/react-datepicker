@@ -230,12 +230,17 @@ export default class DatePicker extends React.Component {
         highlightDates: getHightLightDaysMap(this.props.highlightDates)
       });
     }
-    if (
-      !prevState.focused &&
-      !isEqual(prevProps.selected, this.props.selected)
-    ) {
-      this.setState({ inputValue: null });
-    }
+
+    // FIX
+    // Comment out this condition as it does allow the user to delete the selected value without losing input focus.
+    // It is needed only for timepicker.
+    //
+    // if (
+    //   !prevState.focused &&
+    //   !isEqual(prevProps.selected, this.props.selected)
+    // ) {
+    //   this.setState({ inputValue: null });
+    // }
   }
 
   componentWillUnmount() {
