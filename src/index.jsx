@@ -357,10 +357,20 @@ export default class DatePicker extends React.Component {
   };
 
   handleBlur = event => {
+    // FIX
+    // Trigger onBlur with `Enter` click of mobile keyboard.
+    const clickedInsideDatepicker =
+      this.calendar &&
+      this.calendar.componentNode &&
+      typeof this.calendar.componentNode.contains === "function" &&
+      this.calendar.componentNode.contains(event.relatedTarget);
+
     if (
       this.state.open &&
       !this.props.withPortal &&
-      !this.props.showTimeInput
+      !this.props.showTimeInput &&
+      // Check also if blur event is triggered with click inside datepicker.
+      clickedInsideDatepicker
     ) {
       this.deferFocusInput();
     } else {
