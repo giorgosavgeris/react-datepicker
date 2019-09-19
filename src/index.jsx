@@ -358,12 +358,16 @@ export default class DatePicker extends React.Component {
 
   handleBlur = event => {
     // FIX
+    // IE sets document.activeElement to the next focused element, before onBlur is triggered.
+    const elementTakesFocus = event.relatedTarget || document.activeElement;
+
+    // FIX
     // Trigger onBlur with `Enter` click of mobile keyboard.
     const clickedInsideDatepicker =
       this.calendar &&
       this.calendar.componentNode &&
       typeof this.calendar.componentNode.contains === "function" &&
-      this.calendar.componentNode.contains(event.relatedTarget);
+      this.calendar.componentNode.contains(elementTakesFocus);
 
     if (
       this.state.open &&
